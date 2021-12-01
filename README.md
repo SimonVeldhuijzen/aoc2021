@@ -1,3 +1,3 @@
 # aoc2021
 
-Run with ./gradlew run --args {{day}}
+Run with `./gradlew run --args {{day}}`
