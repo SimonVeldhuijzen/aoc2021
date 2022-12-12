@@ -1,22 +1,29 @@
 package aoc2021.solvers
 
 import aoc2021.helpers.InputLoader
+import java.util.*
 
 class Day01 : Solver {
-    override fun partA(): String {
-        val input = InputLoader().loadLongs(1)
-        return countIncreases(input)
+    override fun partA() = calculateTopElves(1)
+
+    override fun partB() = calculateTopElves(3)
+
+    private fun calculateTopElves(top: Int) =
+        generateElves().map { it.sum() }.sortedDescending().take(top).sum().toString()
+
+    private fun generateElves(): LinkedList<List<Long>> {
+        val input = InputLoader().load(1)
+        val elves = LinkedList<List<Long>>()
+        var current = LinkedList<Long>()
+        for (line in input) {
+            if (line == "") {
+                elves.add(current.toList())
+                current = LinkedList<Long>()
+            } else {
+                current.add(line.toLong())
+            }
+        }
+
+        return elves
     }
-
-    override fun partB(): String {
-        val input = InputLoader().loadLongs(1)
-        val windowed = createSlidingSums(input, 3)
-        return countIncreases(windowed)
-    }
-
-    private fun countIncreases(input: List<Long>) =
-        input.indices.drop(1).count { input[it] > input[it - 1] }.toString()
-
-    private fun createSlidingSums(input: List<Long>, size: Int) =
-        input.indices.drop(size - 1).map { input.drop(it - size + 1).take(size).sum() }
 }

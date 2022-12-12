@@ -11,6 +11,7 @@ fun main(args: Array<String>) {
     val day = args[0].toIntOrNull() ?: run { println("The day should be an integer"); return }
     val solver = SolverLoader().load(day) ?: run { println("No solver found for day $day"); return }
 
+    solver.partA()
     fun trySolve(f: () -> String) = try {
         f()
     } catch (t: Throwable) {
